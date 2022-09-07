@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class KlipApiApplication {
 
 	public static String version =  "v1.0.0";
-	public static String build = "KLIP050922REV1";
+	public static String build = "KLIP090922REV1";
 
 	/**
 	 * Main application function

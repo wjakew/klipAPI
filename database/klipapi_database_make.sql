@@ -6,13 +6,14 @@ CREATE DATABASE IF NOT EXISTS klipapi_database;
 USE klipapi_database;
 SET SQL_MODE = 'ALLOW_INVALID_DATES';
 -- loading tables
-
 CREATE TABLE HEALTH
 (
     health_database_version VARCHAR(10),
     health_database_status INT,
+    health_database_enable INT
+);
 
-)
+INSERT INTO HEALTH (health_database_version, health_database_status, health_database_enable) VALUES ('100',0,0);
 -- table for storing bucket data
 CREATE TABLE BUCKET
 (
