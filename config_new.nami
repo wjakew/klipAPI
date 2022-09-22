@@ -1,0 +1,7 @@
+$configuration file for nami app / nami service - KLIP220922REV1
+klip_raw_database%localhost
+klip_raw_database_user%root
+klip_raw_database_password%password
+klip_raw_database_name%klipapi_database
+
+$by Jakub Wawak 2022 / j.wawak@usp.pl / kubawawak@gmail.com
