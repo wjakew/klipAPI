@@ -5,6 +5,7 @@
  */
 package com.jakubwawak.klipAPI;
 
+import com.jakubwawak.database.Database_Connector;
 import com.jakubwawak.maintanance.Configuration_Service;
 import com.jakubwawak.maintanance.LoGrabber;
 import org.springframework.boot.SpringApplication;
@@ -19,7 +20,7 @@ import java.lang.module.Configuration;
 public class KlipApiApplication {
 
 	public static String version =  "v1.0.0";
-	public static String build = "KLIP220922REV1";
+	public static String build = "KLIP230922REV1";
 
 	/**
 	 * Main application function
@@ -33,7 +34,7 @@ public class KlipApiApplication {
 			cs.load_config();
 			//configuration exists - loaded data
 			//api can start
-			run(args);
+			run(args,log,cs);
 		}
 		else{
 			// need to load data from user - configuration file not exists
@@ -44,7 +45,7 @@ public class KlipApiApplication {
 				cs.load_config();
 				//configutarion ready - loaded from user
 				//api can start
-				run(args);
+				run(args,log,cs);
 			}catch(Exception e){
 				log.add("Major error ("+e.toString()+")","MAJOR-API-ERROR");
 			}
@@ -55,8 +56,15 @@ public class KlipApiApplication {
 	 * Function for running main program
 	 * @param args
 	 */
-	public static void run(String[] args){
-		SpringApplication.run(KlipApiApplication.class, args);
+	public static void run(String[] args,LoGrabber log,Configuration_Service cs){
+		Database_Connector database = new Database_Connector(cs,log);
+		database.connect();
+		if (database.connected){
+			SpringApplication.run(KlipApiApplication.class, args);
+		}
+		else{
+			log.add("Failed to connect to database!","DATABASE-CONNECTION-FAILED");
+		}
 	}
 	/**
 	 * Function for showing application header

@@ -10,9 +10,11 @@ import com.jakubwawak.maintanance.LoGrabber;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 /**
  * Object for connecting to database
@@ -61,6 +63,20 @@ public class Database_Connector {
         }
         else{
             nl.add("Failed to connect, configuration file is empty.","DATABASE-CONFIGURATION-EMPTY");
+        }
+    }
+
+    /**
+     * Function for loading and getting health data
+     * @return ArrayList
+     */
+    public ArrayList<String> get_health_data(){
+        String query = "SELECT * FROM HEALTH;";
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+
+        }catch(SQLException e){
+
         }
     }
 
