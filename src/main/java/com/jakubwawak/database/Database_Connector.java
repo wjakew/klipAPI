@@ -8,10 +8,7 @@ package com.jakubwawak.database;
 import com.jakubwawak.maintanance.Configuration_Service;
 import com.jakubwawak.maintanance.LoGrabber;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -71,12 +68,48 @@ public class Database_Connector {
      * @return ArrayList
      */
     public ArrayList<String> get_health_data(){
+        ArrayList<String> data = new ArrayList<>();
         String query = "SELECT * FROM HEALTH;";
         try{
             PreparedStatement ppst = con.prepareStatement(query);
-
+            ResultSet rs = ppst.executeQuery();
+            if ( rs.next() ){
+                data.add(rs.getString("health_database_version"));
+                data.add(rs.getString("health_database_status"));
+                data.add(rs.getString("health_database_enable"));
+                nl.add("Loaded health data from database","HEALTH-LOAD");
+            }
+            else{
+                nl.add("Cannot load health data. Problem with database","HEALTH-ERROR");
+            }
         }catch(SQLException e){
+            nl.add("Failed to get health data ("+e.toString()+")","HEALTH-FAILED");
+        }
+        return data;
+    }
 
+    /**
+     * Check if api is set to enabled
+     * @return boolean
+     * return codes:
+     *  0 - API disabled
+     *  1 - API enabled
+     * -1 - health data error on database (no data in health table)
+     * -2 - database error during health table select
+     */
+    public int check_api_enabled(){
+        String query = "SELECT health_database_enable FROM HEALTH;";
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+            ResultSet rs = ppst.executeQuery();
+            if (rs.next()){
+                nl.add("API enabled flag set to: "+rs.getInt("health_database_enable"),"API-ENABLED");
+                return rs.getInt("health_database_enable");
+            }
+            return -1;
+        }catch(SQLException e){
+            nl.add("Failed to check api enabled! ("+e.toString()+")","API-ENABLED-FAILED");
+            return -2;
         }
     }
 
