@@ -20,7 +20,7 @@ import java.lang.module.Configuration;
 public class KlipApiApplication {
 
 	public static String version =  "v1.0.0";
-	public static String build = "KLIP240922REV1";
+	public static String build = "KLIP250922REV1";
 
 	public static Database_Connector database;
 	public static LoGrabber log;
@@ -63,7 +63,8 @@ public class KlipApiApplication {
 		database = new Database_Connector(cs,log);
 		database.connect();
 		if (database.connected){
-			SpringApplication.run(KlipApiApplication.class, args);
+			KlipApiMenu menu = new KlipApiMenu();
+			menu.run(args);
 		}
 		else{
 			log.add("Failed to connect to database!","DATABASE-CONNECTION-FAILED");
