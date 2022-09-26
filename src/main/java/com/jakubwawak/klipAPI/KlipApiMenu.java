@@ -5,6 +5,7 @@
  */
 package com.jakubwawak.klipAPI;
 
+import com.jakubwawak.maintanance.ConsoleColors;
 import org.springframework.boot.SpringApplication;
 
 import java.util.Scanner;
@@ -24,7 +25,7 @@ public class KlipApiMenu {
     /**
      * Constructor
      */
-    public void KlipApiMenu(){
+    public KlipApiMenu(){
         System.out.println("Database status: "+KlipApiApplication.database.connected+", API status: "+KlipApiApplication.database.check_api_enabled());
         System.out.println(header);
         exit_flag = true;
@@ -35,7 +36,7 @@ public class KlipApiMenu {
      */
     public void run(String[] args){
         while(exit_flag){
-            System.out.print("klipAPI>");
+            System.out.print(ConsoleColors.BLUE_BOLD_BRIGHT+"klipAPI>"+ConsoleColors.RESET);
             Scanner sc = new Scanner(System.in);
             String user_input = sc.nextLine();
             mind(user_input,args);
