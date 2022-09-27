@@ -43,23 +43,23 @@ public class Database_Connector {
      */
     public void connect(){
         if ( !cs.empty() ){
-            nl.add("Trying to connect to database with user: "+cs.klip_raw_database_user,"DATABASE-CONNECTOR");
+            nl.add("DATABASE-CONNECTOR","Trying to connect to database with user: "+cs.klip_raw_database_user);
             String login_data = "jdbc:mysql://"+cs.klip_raw_database+"/"+cs.klip_raw_database_name+"?"
                     + "useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&" +
                     "user="+cs.klip_raw_database_user+"&password="+cs.klip_raw_database_password;
             try{
                 con = DriverManager.getConnection(login_data);
                 run_time = LocalDateTime.now( ZoneId.of( "Europe/Warsaw" ) );
-                nl.add("Connected succesfully","CONNECTION");
-                nl.add(login_data.substring(0,login_data.length()-25)+"...*END*","CONNECTION");
+                nl.add("CONNECTION","Connected succesfully",);
+                nl.add("CONNECTION",login_data.substring(0,login_data.length()-25)+"...*END*");
                 connected = true;
             }catch(SQLException e){
                 connected = false;
-                nl.add("Failed to connect to database ("+e.toString()+")","ERROR-DB01");
+                nl.add("ERROR-DB01","Failed to connect to database ("+e.toString()+")");
             }
         }
         else{
-            nl.add("Failed to connect, configuration file is empty.","DATABASE-CONFIGURATION-EMPTY");
+            nl.add("DATABASE-CONFIGURATION-EMPTY","Failed to connect, configuration file is empty.");
         }
     }
 
@@ -77,13 +77,13 @@ public class Database_Connector {
                 data.add(rs.getString("health_database_version"));
                 data.add(rs.getString("health_database_status"));
                 data.add(rs.getString("health_database_enable"));
-                nl.add("Loaded health data from database","HEALTH-LOAD");
+                nl.add("HEALTH-LOAD","Loaded health data from database");
             }
             else{
-                nl.add("Cannot load health data. Problem with database","HEALTH-ERROR");
+                nl.add("HEALTH-ERROR","Cannot load health data. Problem with database");
             }
         }catch(SQLException e){
-            nl.add("Failed to get health data ("+e.toString()+")","HEALTH-FAILED");
+            nl.add("HEALTH-FAILED","Failed to get health data ("+e.toString()+")");
         }
         return data;
     }
@@ -103,15 +103,31 @@ public class Database_Connector {
             PreparedStatement ppst = con.prepareStatement(query);
             ResultSet rs = ppst.executeQuery();
             if (rs.next()){
-                nl.add("API enabled flag set to: "+rs.getInt("health_database_enable"),"API-ENABLED");
+                nl.add("API-ENABLED","API enabled flag set to: "+rs.getInt("health_database_enable"));
                 return rs.getInt("health_database_enable");
             }
             return -1;
         }catch(SQLException e){
-            nl.add("Failed to check api enabled! ("+e.toString()+")","API-ENABLED-FAILED");
+            nl.add("API-ENABLED-FAILED","Failed to check api enabled! ("+e.toString()+")");
             return -2;
         }
     }
+
+    /**
+     * Sets API to enabled
+     * @return Integer
+     */
+    public int set_api_enabled(){
+        String query = "UPDATE HEALTH SET healt_database_enable = 1";
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+            ppst.execute();
+            return 1;
+        }catch(SQLException e){
+
+        }
+    }
+
 
 
 }

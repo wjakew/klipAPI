@@ -60,7 +60,14 @@ public class KlipApiMenu {
                 case "start":
                 {
                     if ( KlipApiApplication.database.connected)
-                        SpringApplication.run(KlipApiApplication.class, args);
+                    {
+                        if ( KlipApiApplication.database.check_api_enabled() == 1){
+                            SpringApplication.run(KlipApiApplication.class, args);
+                        }
+                        else{
+                            System.out.println("API not enabled");
+                        }
+                    }
                     else
                         System.out.println("Cannot run without database connection!");
                     break;
@@ -69,6 +76,7 @@ public class KlipApiMenu {
                 {
                     System.out.println("klipAPI "+KlipApiApplication.version);
                     System.out.println("Build: "+KlipApiApplication.build);
+                    System.out.println("API Status: "+KlipApiApplication.database.check_api_enabled());
                     System.out.println("by Jakub Wawak / kubawawak@gmail.com");
                     break;
                 }
