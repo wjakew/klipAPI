@@ -6,7 +6,8 @@ CREATE DATABASE IF NOT EXISTS klipapi_database;
 USE klipapi_database;
 DROP TABLE IF EXISTS HEALTH;
 DROP TABLE IF EXISTS KLIP_LOG;
-DROP TABLE IF EXISTS SESSION;
+DROP TABLE IF EXISTS APPTOKEN;
+DROP TABLE IF EXISTS KLIP_SESSION;
 DROP TABLE IF EXISTS KLIP;
 DROP TABLE IF EXISTS BUCKET;
 
@@ -20,6 +21,16 @@ CREATE TABLE HEALTH
 );
 
 INSERT INTO HEALTH (health_database_version, health_database_status, health_database_enable) VALUES ('100',0,0);
+
+-- table for storing apptoken tokens
+CREATE TABLE APPTOKEN
+(
+    apptoken_id INT AUTO_INCREMENT PRIMARY KEY,
+    apptoken_code VARCHAR(20),
+    apptoken_mac VARCHAR(20),
+    apptoken_time TIMESTAMP
+);
+
 -- table for storing bucket data
 CREATE TABLE BUCKET
 (
@@ -44,7 +55,7 @@ CREATE TABLE KLIP
     CONSTRAINT fk_klip FOREIGN KEY (bucket_id) REFERENCES BUCKET(bucket_id)
 );
 -- table for storing session data
-CREATE TABLE SESSION
+CREATE TABLE KLIP_SESSION
 (
     session_id INT AUTO_INCREMENT PRIMARY KEY,
     bucket_id INT,
@@ -68,5 +79,5 @@ CREATE TABLE KLIP_LOG
     log_timestamp TIMESTAMP,
 
     CONSTRAINT fk_kliplog1 FOREIGN KEY  (bucket_id) REFERENCES BUCKET(bucket_id),
-    CONSTRAINT fk_kliplog2 FOREIGN KEY (session_id) REFERENCES SESSION(session_id)
+    CONSTRAINT fk_kliplog2 FOREIGN KEY (session_id) REFERENCES KLIP_SESSION(session_id)
 );

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class Database_Connector {
     Configuration_Service cs;
-    LoGrabber nl;
+    public LoGrabber nl;
     String logged_user_login;
 
     public boolean connected;
@@ -50,7 +50,7 @@ public class Database_Connector {
             try{
                 con = DriverManager.getConnection(login_data);
                 run_time = LocalDateTime.now( ZoneId.of( "Europe/Warsaw" ) );
-                nl.add("CONNECTION","Connected succesfully",);
+                nl.add("CONNECTION","Connected succesfully");
                 nl.add("CONNECTION",login_data.substring(0,login_data.length()-25)+"...*END*");
                 connected = true;
             }catch(SQLException e){
@@ -122,9 +122,28 @@ public class Database_Connector {
         try{
             PreparedStatement ppst = con.prepareStatement(query);
             ppst.execute();
+            nl.add("API-ENABLED","Api set to enabled!");
             return 1;
         }catch(SQLException e){
+            nl.add("API-ENABLED-FAILED","Failed to set api enabled ("+e.toString()+")");
+            return -1;
+        }
+    }
 
+    /**
+     * Sets API to disabled
+     * @return Integer
+     */
+    public int set_api_disabled(){
+        String query = "UPDATE HEALTH SET healt_database_enable = 0";
+        try{
+            PreparedStatement ppst = con.prepareStatement(query);
+            ppst.execute();
+            nl.add("API-DISABLED","Api set to disabled!");
+            return 1;
+        }catch(SQLException e){
+            nl.add("API-DISABLED-FAILED","Failed to set api disabled ("+e.toString()+")");
+            return -1;
         }
     }
 

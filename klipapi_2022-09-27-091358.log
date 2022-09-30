@@ -1,8 +1,0 @@
-Tue Sep 27 09:13:49 CEST 2022 - LOG_START - LOG STARTED - Tue Sep 27 09:13:49 CEST 2022
-Tue Sep 27 09:13:49 CEST 2022 - CONFIG-FILE-FOUND - Found configuration file: C:\googledrive\src\Current\projects\klipAPI\application\klipAPI\config_new.nami
-Tue Sep 27 09:13:49 CEST 2022 - CONFIG-LOADED - Configuration file loaded
-Tue Sep 27 09:13:49 CEST 2022 - Trying to connect to database with user: root - DATABASE-CONNECTOR
-Tue Sep 27 09:13:50 CEST 2022 - Connected succesfully - CONNECTION
-Tue Sep 27 09:13:50 CEST 2022 - jdbc:mysql://localhost/klipapi_database?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&us...*END* - CONNECTION
-Tue Sep 27 09:13:50 CEST 2022 - API enabled flag set to: 0 - API-ENABLED
-Job time: from - 2022-09-27T09:13:49.520413900 to: 2022-09-27T09:13:58.452045600 apr: 0 minutes.File closed! by Jakub Wawak / kubawawak@gmail.com / j.wawak@usp.pl

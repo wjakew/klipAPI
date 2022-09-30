@@ -5,6 +5,7 @@
  */
 package com.jakubwawak.handlers;
 
+import com.jakubwawak.klipAPI.KlipApiApplication;
 import com.jakubwawak.request_objects.R_Health;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,7 @@ public class HANDLER_Health {
 
     @GetMapping("/health")
     public R_Health get_health_response(){
-
+        KlipApiApplication.database.nl.add("ENDPOINT-HEALTH","Got request for /health");
         // setting main response object
         R_Health health_response = new R_Health();
 
@@ -28,6 +29,7 @@ public class HANDLER_Health {
         // not applicable - endpoint is not using session token checking
 
         // returning object data
+        KlipApiApplication.database.nl.add("ENDPOINT-HEALTH","Request e")
         return health_response;
     }
 }

@@ -54,7 +54,7 @@ public class KlipApiMenu {
                 {
                     System.out.println("API Exit...");
                     System.out.println("Bye");
-                    KlipApiApplication.log.log_dump();
+                    KlipApiApplication.database.nl.log_dump();
                     System.exit(0);
                 }
                 case "start":
@@ -70,6 +70,18 @@ public class KlipApiMenu {
                     }
                     else
                         System.out.println("Cannot run without database connection!");
+                    break;
+                }
+                case "enable":
+                {
+                    KlipApiApplication.database.set_api_enabled();
+                    System.out.println("API status changed to: "+KlipApiApplication.database.check_api_enabled());
+                    break;
+                }
+                case "disable":
+                {
+                    KlipApiApplication.database.set_api_disabled();
+                    System.out.println("API status changed to: "+KlipApiApplication.database.check_api_enabled());
                     break;
                 }
                 case "info":
