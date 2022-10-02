@@ -7,10 +7,13 @@ package com.jakubwawak.connection_engine;
 
 import com.jakubwawak.klipAPI.KlipApiApplication;
 import com.jakubwawak.klipAPI.KlipApiMenu;
+import com.jakubwawak.maintanance.RandomString;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 /**
  * Object for checking/maintaining apptoken data
@@ -38,6 +41,69 @@ public class Apptoken {
     public Apptoken(String apptoken_code,String apptoken_mac){
         this.apptoken_code = apptoken_code;
         this.apptoken_mac = apptoken_mac;
+    }
+
+    /**
+     * Constructor
+     * @param apptoken_mac
+     */
+    public Apptoken(String apptoken_mac){
+        this.apptoken_code = "";
+        this.apptoken_mac = apptoken_mac;
+    }
+
+    /**
+     * Constructor
+     */
+    public Apptoken(){
+        this.apptoken_code = "";
+        this.apptoken_mac = "";
+    }
+
+    /**
+     * Function for creating apptoken for given MAC Address
+     * @return Integer
+     * return codes:
+     *  1 - apptoken created
+     * -1 - database error
+     */
+    public int create_apptoken(){
+        String query = "INSERT INTO APPTOKEN (apptoken_code,apptoken_mac,apptoken_time) VALUES (?,?,?);";
+        try{
+            PreparedStatement ppst = KlipApiApplication.database.con.prepareStatement(query);
+            RandomString randomString = new RandomString(20);
+            ppst.setString(1,randomString.buf);
+            ppst.setString(2,apptoken_mac);
+            ppst.setObject(3, LocalDateTime.now(ZoneId.of("Europe/Warsaw")));
+            KlipApiApplication.database.nl.add("APPTOKEN-CREATE","Created apptoken for "+apptoken_mac+" CODE: "+randomString.buf);
+            ppst.execute();
+            return 1;
+        }catch(SQLException e){
+            KlipApiApplication.database.nl.add("APPTOKEN-CREATE-FAILED","Failed to create apptoken entry on database ("+e.toString()+")");
+            return -1;
+        }
+    }
+
+    /**
+     * Function for removing apptoken data from database
+     * @param apptoken_id
+     * @return Integer
+     * return codes:
+     *  1 - apptoken removed
+     * -1 - database error
+     */
+    public int remove_apptoken(int apptoken_id){
+        String query = "DELETE FROM APPTOKEN WHERE apptoken_id = ?;";
+        try{
+            PreparedStatement ppst = KlipApiApplication.database.con.prepareStatement(query);
+            ppst.setInt(1,apptoken_id);
+            ppst.execute();
+            KlipApiApplication.database.nl.add("APPTOKEN-REMOVED","Removed apptoken data for apptoken_id:"+apptoken_id);
+            return 1;
+        }catch(SQLException e){
+            KlipApiApplication.database.nl.add("APPTOKEN-REMOVE-FAILED","Failed to remove apptoken ("+e.toString()+")");
+            return -1;
+        }
     }
 
     /**

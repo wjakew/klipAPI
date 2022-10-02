@@ -20,7 +20,7 @@ import java.lang.module.Configuration;
 public class KlipApiApplication {
 
 	public static String version =  "v1.0.0";
-	public static String build = "KLIP300922REV1";
+	public static String build = "KLIP021022REV1";
 
 	public static Database_Connector database;
 	public static LoGrabber log;

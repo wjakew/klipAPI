@@ -29,7 +29,7 @@ public class HANDLER_Health {
         // not applicable - endpoint is not using session token checking
 
         // returning object data
-        KlipApiApplication.database.nl.add("ENDPOINT-HEALTH","Request e")
+        KlipApiApplication.database.nl.add("ENDPOINT-HEALTH","Request resolved. Data sent");
         return health_response;
     }
 }
