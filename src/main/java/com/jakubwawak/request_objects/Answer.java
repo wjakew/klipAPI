@@ -45,6 +45,12 @@ public class Answer {
     public int answer_error_flag;
 
     /**
+     * Variable to store response flags for different objects
+     * default value: -99
+     */
+    public int object_flag;
+
+    /**
      * Constructor
      */
     public Answer(){
@@ -53,5 +59,6 @@ public class Answer {
         answer_name = "none";
         answer_error = "";
         answer_error_flag = 0;
+        object_flag = -99;
     }
 }
