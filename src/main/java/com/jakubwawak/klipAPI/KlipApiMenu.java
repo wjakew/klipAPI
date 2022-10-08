@@ -84,12 +84,42 @@ public class KlipApiMenu {
                     System.out.println("API status changed to: "+KlipApiApplication.database.check_api_enabled());
                     break;
                 }
+
+                case "apptoken":
+                {
+                    menu_apptoken(user_input);
+                    break;
+                }
                 case "info":
                 {
-                    System.out.println("klipAPI "+KlipApiApplication.version);
+                    System.out.println("com/jakubwawak/klipAPI " +KlipApiApplication.version);
                     System.out.println("Build: "+KlipApiApplication.build);
                     System.out.println("API Status: "+KlipApiApplication.database.check_api_enabled());
                     System.out.println("by Jakub Wawak / kubawawak@gmail.com");
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Function for maintaining apptoken data
+     * @param user_input
+     */
+    void menu_apptoken(String user_input){
+        for(String word : user_input.split(" ")){
+            switch(word){
+                case "create":
+                {
+                    // apptoken create mac_address
+                    break;
+                }
+                case "delete":
+                {
+                    break;
+                }
+                case "list":
+                {
                     break;
                 }
             }

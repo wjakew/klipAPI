@@ -6,7 +6,6 @@
 package com.jakubwawak.connection_engine;
 
 import com.jakubwawak.klipAPI.KlipApiApplication;
-import com.jakubwawak.klipAPI.KlipApiMenu;
 import com.jakubwawak.maintanance.RandomString;
 
 import java.sql.PreparedStatement;

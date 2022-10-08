@@ -8,10 +8,7 @@ package com.jakubwawak.klipAPI;
 import com.jakubwawak.database.Database_Connector;
 import com.jakubwawak.maintanance.Configuration_Service;
 import com.jakubwawak.maintanance.LoGrabber;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.lang.module.Configuration;
 
 /**
  * Main application object
@@ -20,7 +17,7 @@ import java.lang.module.Configuration;
 public class KlipApiApplication {
 
 	public static String version =  "v1.0.0";
-	public static String build = "KLIP031022REV1";
+	public static String build = "KLIP071022REV1";
 
 	public static Database_Connector database;
 	public static LoGrabber log;
