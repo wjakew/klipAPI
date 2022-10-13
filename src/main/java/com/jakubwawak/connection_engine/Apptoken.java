@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 /**
  * Object for checking/maintaining apptoken data
@@ -29,9 +30,10 @@ public class Apptoken {
      * );
      */
 
-    String apptoken_code;
-    String apptoken_mac;
+    public String apptoken_code;
+    public String apptoken_mac;
 
+    public int apptoken_id;
     /**
      * Constructor
      * @param apptoken_code
@@ -40,6 +42,7 @@ public class Apptoken {
     public Apptoken(String apptoken_code,String apptoken_mac){
         this.apptoken_code = apptoken_code;
         this.apptoken_mac = apptoken_mac;
+        this.apptoken_id = -1;
     }
 
     /**
@@ -49,6 +52,13 @@ public class Apptoken {
     public Apptoken(String apptoken_mac){
         this.apptoken_code = "";
         this.apptoken_mac = apptoken_mac;
+        this.apptoken_id = -1;
+    }
+
+    public Apptoken (int apptoken_id){
+        this.apptoken_code = "";
+        this.apptoken_mac = "";
+        this.apptoken_id = apptoken_id;
     }
 
     /**
@@ -85,13 +95,12 @@ public class Apptoken {
 
     /**
      * Function for removing apptoken data from database
-     * @param apptoken_id
      * @return Integer
      * return codes:
      *  1 - apptoken removed
      * -1 - database error
      */
-    public int remove_apptoken(int apptoken_id){
+    public int remove_apptoken(){
         String query = "DELETE FROM APPTOKEN WHERE apptoken_id = ?;";
         try{
             PreparedStatement ppst = KlipApiApplication.database.con.prepareStatement(query);
@@ -126,6 +135,26 @@ public class Apptoken {
             return 0;
         }catch(SQLException e){
             KlipApiApplication.database.nl.add("APPTOKEN-CHECK-FAILED","Failed to check API ("+e.toString()+")");
+            return -1;
         }
+    }
+
+    /**
+     * Function for listing apptoken data
+     * @return ArrayList
+     */
+    public ArrayList<String> show_apptoken_list(){
+        String query = "SELECT * FROM APPTOKEN;";
+        ArrayList<String> data = new ArrayList<>();
+        try{
+            PreparedStatement ppst = KlipApiApplication.database.con.prepareStatement(query);
+            ResultSet rs = ppst.executeQuery();
+            while(rs.next()){
+                data.add("id: "+rs.getInt("apptoken_id")+": "+rs.getString("apptoken_mac")+" code: "+rs.getString("apptoken_code"));
+            }
+        }catch(SQLException e){
+            KlipApiApplication.database.nl.add("APPTOKEN-LIST-FAILED","Failed to list apptokens ("+e.toString()+")");
+        }
+        return data;
     }
 }

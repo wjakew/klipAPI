@@ -5,6 +5,7 @@
  */
 package com.jakubwawak.klipAPI;
 
+import com.jakubwawak.connection_engine.Apptoken;
 import com.jakubwawak.maintanance.ConsoleColors;
 import org.springframework.boot.SpringApplication;
 
@@ -112,14 +113,40 @@ public class KlipApiMenu {
                 case "create":
                 {
                     // apptoken create mac_address
+                    if ( user_input.split(" ").length == 3){
+                        Apptoken apptoken = new Apptoken(user_input.split(" ")[2]);
+                    }
+                    else{
+                        System.out.println("Wrong apptoken command usage.");
+                    }
                     break;
                 }
                 case "delete":
                 {
+                    // apptoken delete apptoken_id
+                    if ( user_input.split(" ").length == 3){
+                        try{
+                            int apptoken_id = Integer.parseInt(user_input.split(" ")[3]);
+                            Apptoken apptoken = new Apptoken(apptoken_id);
+                            if ( apptoken.remove_apptoken() == 1){
+                                System.out.println("Apptoken removed!");
+                            }
+                            else{
+                                System.out.println("Error removing apptoken");
+                            }
+                        }catch(Exception e){
+                            System.out.println("Failed, wrong command usage.");
+                        }
+                    }
                     break;
                 }
                 case "list":
                 {
+                    // apptoken list
+                    Apptoken apptoken = new Apptoken();
+                    for(String data: apptoken.show_apptoken_list()){
+                        System.out.println(data);
+                    }
                     break;
                 }
             }

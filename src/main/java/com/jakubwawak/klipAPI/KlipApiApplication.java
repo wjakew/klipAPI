@@ -17,7 +17,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class KlipApiApplication {
 
 	public static String version =  "v1.0.0";
-	public static String build = "KLIP071022REV1";
+	public static String build = "KLIP131022REV1";
 
 	public static Database_Connector database;
 	public static LoGrabber log;
@@ -65,10 +65,10 @@ public class KlipApiApplication {
 		}
 		else{
 			log.add("Failed to connect to database!","DATABASE-CONNECTION-FAILED");
-		}
+	}
 	}
 	/**
-	 * Function for showing application header
+		 * Function for showing application header
 	 */
 	public static void show_header(){
 		String header = " _    _ _         _    ____ ___\n" +
