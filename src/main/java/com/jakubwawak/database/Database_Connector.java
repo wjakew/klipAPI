@@ -118,7 +118,7 @@ public class Database_Connector {
      * @return Integer
      */
     public int set_api_enabled(){
-        String query = "UPDATE HEALTH SET healt_database_enable = 1";
+        String query = "UPDATE HEALTH SET health_database_enable = 1";
         try{
             PreparedStatement ppst = con.prepareStatement(query);
             ppst.execute();
@@ -135,7 +135,7 @@ public class Database_Connector {
      * @return Integer
      */
     public int set_api_disabled(){
-        String query = "UPDATE HEALTH SET healt_database_enable = 0";
+        String query = "UPDATE HEALTH SET health_database_enable = 0";
         try{
             PreparedStatement ppst = con.prepareStatement(query);
             ppst.execute();
